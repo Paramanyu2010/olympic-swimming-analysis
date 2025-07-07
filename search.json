@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "sources.html",
+    "href": "sources.html",
+    "title": "Data Sources",
+    "section": "",
+    "text": "The data for this project comes from the SCORE Sports Data Repository, specifically their Olympic Swimming History dataset available at https://data.scorenetwork.org/swimming/olympic_swimming_history.html. This dataset contains comprehensive results from Olympic swimming competitions from 1912 to 2020, including 4,359 individual race results.\nThe original data source is olympics.com, and the dataset was compiled and made available by datasciencedonut on Kaggle. The data includes all athletes who competed in Olympic swimming events, not just medal winners, which makes it ideal for understanding the full spectrum of Olympic-level performance.\nData cleaning involved converting time formats from minutes:seconds.decimal to total seconds for analysis, removing DNS (Did Not Start) and DQ (Disqualified) entries, and filtering out obvious data entry errors or outliers. No observations were removed based on performance criteria - the goal was to include all legitimate competitive times to show the complete picture of Olympic swimming performance.\nThe dataset includes the following variables:\n\nLocation: Hosting city of the Olympics\nYear: Year of the Olympics (1912-2020)\nDistance: Distance in meters (relays show number of swimmers × distance per swimmer)\nStroke: Type of swimming stroke (Freestyle, Backstroke, Breaststroke, Butterfly, Individual Medley)\nRelay: Binary indicator (0 for individual events, 1 for relay events)\nGender: Men or Women\nTeam: Three-letter country code\nAthlete: Name of the athlete\nResults: Time in minutes:seconds.decimal format\nRank: Medal placement (1=Gold, 2=Silver, 3=Bronze, 4=No Medal, 0=DNS/DQ)"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "My name is Paramanyu Gupta, and I’m a data science student passionate about sports analytics and visualization. You can find my work on GitHub and contact me at manish.gupta321@gmail.com\nThis project analyzes Olympic swimming performance data from 1912-2020, focusing on the distribution of all athlete times rather than just winning performances. The code and data are available in the GitHub repository.\nThis project was created as part of Kane’s Data Science Bootcamp."
+  }
+]
