@@ -83,6 +83,9 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./images/olympic_rings.png" alt="" class="navbar-logo">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Olympic Swimming Analysis</span>
     </a>
@@ -147,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Welcome to my project on Olympic Swimming! Have you ever wondered just how much faster Olympic swimmers have become over the decades, and what factors might be behind that incredible progress? In this project, I’ve dived into Olympic swimming data from 1912 to 2020 to explore average speed trends, looking at how evolving techniques, new technology, and dedicated training have pushed the limits of human performance. Beyond speed, I’ve also created an interactive map to visualize the global distribution of Olympic swimming medals, so we can see which countries have historically dominated the sport. Join me as we explore these fascinating insights into the history and evolution of Olympic swimming!</p>
+<p>Have you ever wondered just how much faster Olympic swimmers have become over the decades, and what factors might be behind that incredible progress? To explore this, I’ve analyzed comprehensive Olympic swimming data spanning from 1912 to 2020, allowing me to examine average speed trends and visualize the global distribution of Olympic medals. Through this project, we’ve clearly seen how Olympic swimmers have consistently and substantially increased their average speeds over the last century, a powerful testament to continuous advancements in both technique and technology.</p>
 <p><br></p>
 <div class="cell">
 <div class="cell-output-display">
@@ -234,7 +237,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/Paramanyu2010\.github\.io\/olympic-swimming-analysis\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

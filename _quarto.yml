@@ -5,6 +5,7 @@ project:
 website:
   title: "Olympic Swimming Analysis"
   navbar:
+    logo: "images/olympic_rings.png" # <--- CHANGED TO A DIRECT STRING PATH
     left:
       - href: index.qmd
         text: Home
