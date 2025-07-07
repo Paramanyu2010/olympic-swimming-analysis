@@ -1,0 +1,182 @@
+---
+title: "Olympic Swimming Speed Trends Chart (1912-2020)"
+format: html
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(stringr)
+library(tidyr) # Required for drop_na()
+```
+
+```{r}
+# 1. Data Loading
+# Ensure the 'olympic_swimming.csv' file is in a location accessible by R.
+# If it's in the same directory as your .qmd file, "olympic_swimming.csv" is sufficient.
+# If it's in a 'data' subfolder, 'data/olympic_swimming.csv' is correct.
+df <- read_csv("data/olympic_swimming.csv")
+```
+
+```{r}
+# 2. Data Cleaning/Transformation
+# Function to convert distance string to meters
+distance_to_meters <- function(distance_str) {
+  if (is.na(distance_str)) {
+    return(NA_real_)
+  }
+  s <- tolower(as.character(distance_str))
+  s <- str_replace_all(s, "m", "")
+  s <- str_trim(s)
+
+  if (str_detect(s, "x")) { # This indicates a relay (e.g., 4x100) or other non-standard distance
+    return(NA_real_)
+  }
+  return(as.numeric(s))
+}
+
+# Function to convert time string to seconds
+time_to_seconds <- function(time_str) {
+  if (is.na(time_str)) {
+    return(NA_real_)
+  }
+  time_str <- str_trim(as.character(time_str))
+
+  # Handle non-numeric strings like "Did not finish", "Disqualified"
+  if (nchar(time_str) == 0 || grepl("[[:alpha:]]", time_str) || grepl(" ", time_str)) {
+    return(NA_real_)
+  }
+
+  colon_count <- str_count(time_str, ":")
+
+  if (colon_count == 2) { # HH:MM:SS.ms (e.g., '00:01:13.600000')
+    parts <- as.numeric(str_split(time_str, ":")[[1]])
+    return(parts[1] * 3600 + parts[2] * 60 + parts[3])
+  } else if (colon_count == 1) { # MM:SS.ms or MM:SS (e.g., '1:53.64', '1:05')
+    parts <- as.numeric(str_split(time_str, ":")[[1]])
+    return(parts[1] * 60 + parts[2])
+  } else { # SS.ms or just SS
+    return(as.numeric(time_str))
+  }
+}
+
+df <- df %>%
+  rowwise() %>% # Apply row-wise because the functions expect single values
+  mutate(
+    Distance_m = distance_to_meters(`Distance (in meters)`),
+    time_sec = time_to_seconds(Results)
+  ) %>%
+  ungroup()
+```
+
+```{r}
+# 3. Filtering and 4. Calculate Speed
+df_cleaned <- df %>%
+  filter(`Relay?` == 0) %>%
+  drop_na(time_sec, Distance_m) %>% # Remove rows with NA in these columns
+  mutate(speed = Distance_m / time_sec)
+```
+
+```{r}
+# 5. Aggregation
+df_summary <- df_cleaned %>%
+  group_by(Year, Gender) %>%
+  summarise(speed = mean(speed, na.rm = TRUE)) %>%
+  ungroup()
+```
+
+```{r, fig.width=15, fig.height=8}
+# 6. Plotting (using ggplot2)
+p <- ggplot(df_summary, aes(x = Year, y = speed, color = Gender)) +
+  geom_line(aes(linetype = Gender), linewidth = 1) + # Use linetype for clarity
+  geom_point(size = 2) +
+  scale_color_manual(values = c("Men" = "#4A90E2", "Women" = "#E91E63")) +
+  labs(
+    x = "Year",
+    y = "Average speed (m/s)",
+    title = "Olympic Swimming: A Century of Speed and Performance",
+    subtitle = "Driven by evolving techniques, technology, and dedication, speeds consistently improved."
+  ) +
+  theme_minimal() + # A clean theme
+  theme(
+    plot.title = element_text(hjust = 0, size = 20, margin = margin(t = 20, b = -10)),
+    plot.subtitle = element_text(hjust = 0, size = 15, margin = margin(b = 20)),
+    axis.title = element_text(size = 12),
+    legend.title = element_text(size = 14),
+    legend.text = element_text(size = 12),
+    panel.grid.major = element_line(linetype = "dashed", color = "gray"),
+    panel.grid.minor = element_blank(), # Remove minor grid lines
+    plot.margin = unit(c(1, 1, 1, 1), "cm") # Adjust plot margins for text
+  )
+
+# Get y-axis limits from the data for relative positioning of annotations
+min_y_data <- min(df_summary$speed, na.rm = TRUE)
+max_y_data <- max(df_summary$speed, na.rm = TRUE)
+
+# Add annotations (rectangles for shaded areas, vlines for dotted lines)
+# Tech-suit Era & Ban (2008-2010)
+p <- p + annotate("rect", xmin = 2008, xmax = 2010.5, ymin = -Inf, ymax = Inf,
+                  fill = "gold", alpha = 0.15) +
+  annotate("text", x = (2008 + 2010.5) / 2, y = min_y_data + (max_y_data - min_y_data) * 0.02,
+           label = "Tech-suit Era & Ban (2008-2010)", angle = 90,
+           vjust = 0, hjust = 0.5, color = "darkgoldenrod", size = 3)
+
+# WWII (1939-1946)
+p <- p + annotate("rect", xmin = 1939, xmax = 1946, ymin = -Inf, ymax = Inf,
+                  fill = "red", alpha = 0.05) +
+  annotate("text", x = 1942, y = min_y_data + (max_y_data - min_y_data) * 0.02,
+           label = "WWII (1939-1946)", angle = 90,
+           vjust = 0, hjust = 0.5, color = "darkred", size = 3)
+
+# WWI (1914-1919)
+p <- p + annotate("rect", xmin = 1914, xmax = 1919, ymin = -Inf, ymax = Inf,
+                  fill = "blue", alpha = 0.05) +
+  annotate("text", x = 1916, y = min_y_data + (max_y_data - min_y_data) * 0.02,
+           label = "WWI (1914-1919)", angle = 90,
+           vjust = 0, hjust = 0.5, color = "darkblue", size = 3)
+
+# Widespread Goggle Use (from ~1970s)
+p <- p + geom_vline(xintercept = 1972, linetype = "dotted", color = "darkblue", linewidth = 0.8) +
+  annotate("text", x = 1972.5, y = max_y_data * 0.78, # This was already working well
+           label = "Widespread Goggle Use (from ~1970s)", angle = 90,
+           vjust = 0, hjust = 0, color = "darkblue", size = 3)
+
+# Women’s debut (1912)
+p <- p + geom_vline(xintercept = 1912, linetype = "dotdash", color = "pink", linewidth = 0.8) +
+  annotate("text", x = 1912.5, y = max_y_data * 0.9, # This was already working well
+           label = "Women's Debut (1912)", angle = 90,
+           vjust = 1, hjust = 0, color = "deeppink", size = 3)
+
+# Standardized Pools (from 1908)
+p <- p + geom_vline(xintercept = 1908, linetype = "dotted", color = "purple", linewidth = 0.8) +
+  annotate("text", x = 1908.5, y = max_y_data * 0.82, # This was already working well
+           label = "Standardized Pools (from 1908)", angle = 90,
+           vjust = 0, hjust = 0, color = "#663399", size = 3)
+
+# Butterfly Introduction (1956)
+p <- p + geom_vline(xintercept = 1956, linetype = "dotted", color = "darkgreen", linewidth = 0.8) +
+  annotate("text", x = 1956.5, y = max_y_data * 0.70, # This was already working well
+           label = "Butterfly Introduced (1956)", angle = 90,
+           vjust = 0, hjust = 0, color = "darkgreen", size = 3)
+
+# Backstroke Introduction (1900)
+p <- p + geom_vline(xintercept = 1900, linetype = "dotted", color = "gray", linewidth = 0.8) +
+  annotate("text", x = 1900.5, y = max_y_data * 0.74, # This was already working well
+           label = "Backstroke Introduced (1900)", angle = 90,
+           vjust = 0, hjust = 0, color = "dimgray", size = 3)
+
+# 7. X-axis ticks modification (label every 10 years, starting from a clean decade)
+p <- p + scale_x_continuous(breaks = seq(floor(min(df_summary$Year) / 10) * 10, ceiling(max(df_summary$Year) / 10) * 10, by = 10)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Explicitly print the plot object (Quarto will pick this up for display)
+print(p)
+
+# Save the plot to a file (optional, Quarto can also save plots automatically)
+ggsave("olympic_swimming_trends_R.png", plot = p, width = 15, height = 8, units = "in")
+```

@@ -1,0 +1,9 @@
+---
+title: "About"
+---
+
+My name is Paramanyu Gupta, and I'm a data science student passionate about sports analytics and visualization. You can find my work on [GitHub](https://github.com/Paramanyu2010) and contact me at manish.gupta321@gmail.com
+
+This project analyzes Olympic swimming performance data from 1912-2020, focusing on the distribution of all athlete times rather than just winning performances. The code and data are available in the [GitHub repository](https://github.com/Paramanyu2010/olympic-swimming-analysis).
+
+This project was created as part of [Kane's Data Science Bootcamp](https://bootcamp.davidkane.info/).

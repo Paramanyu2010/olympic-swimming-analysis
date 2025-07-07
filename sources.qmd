@@ -1,0 +1,22 @@
+---
+title: "Data Sources"
+---
+
+The data for this project comes from the SCORE Sports Data Repository, specifically their Olympic Swimming History dataset available at https://data.scorenetwork.org/swimming/olympic_swimming_history.html. This dataset contains comprehensive results from Olympic swimming competitions from 1912 to 2020, including 4,359 individual race results.
+
+The original data source is olympics.com, and the dataset was compiled and made available by datasciencedonut on Kaggle. The data includes all athletes who competed in Olympic swimming events, not just medal winners, which makes it ideal for understanding the full spectrum of Olympic-level performance.
+
+Data cleaning involved converting time formats from minutes:seconds.decimal to total seconds for analysis, removing DNS (Did Not Start) and DQ (Disqualified) entries, and filtering out obvious data entry errors or outliers. No observations were removed based on performance criteria - the goal was to include all legitimate competitive times to show the complete picture of Olympic swimming performance.
+
+The dataset includes the following variables:
+
+- **Location**: Hosting city of the Olympics
+- **Year**: Year of the Olympics (1912-2020)
+- **Distance**: Distance in meters (relays show number of swimmers × distance per swimmer)
+- **Stroke**: Type of swimming stroke (Freestyle, Backstroke, Breaststroke, Butterfly, Individual Medley)
+- **Relay**: Binary indicator (0 for individual events, 1 for relay events)
+- **Gender**: Men or Women
+- **Team**: Three-letter country code
+- **Athlete**: Name of the athlete
+- **Results**: Time in minutes:seconds.decimal format
+- **Rank**: Medal placement (1=Gold, 2=Silver, 3=Bronze, 4=No Medal, 0=DNS/DQ)
