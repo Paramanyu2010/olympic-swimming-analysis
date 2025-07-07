@@ -1,6 +1,14 @@
 ---
 title: "Olympic Swimming Speed Trends Chart (1912-2020)"
-format: html
+author: "Paramanyu Gupta"
+format:
+  html:
+    css: styles.css
+    include-in-header:
+      - text: |
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 execute:
   echo: false
   message: false
@@ -14,6 +22,10 @@ library(ggplot2)
 library(stringr)
 library(tidyr)
 ```
+
+Welcome to my project on Olympic Swimming! Have you ever wondered just how much faster Olympic swimmers have become over the decades, and what factors might be behind that incredible progress? In this project, I've dived into Olympic swimming data from 1912 to 2020 to explore average speed trends, looking at how evolving techniques, new technology, and dedicated training have pushed the limits of human performance. Beyond speed, I've also created an interactive map to visualize the global distribution of Olympic swimming medals, so we can see which countries have historically dominated the sport. Join me as we explore these fascinating insights into the history and evolution of Olympic swimming!
+
+<br>
 
 ```{r}
 # 1. Data Loading
