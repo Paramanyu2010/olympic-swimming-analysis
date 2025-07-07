@@ -84,7 +84,7 @@ df_summary <- df_cleaned %>%
   ungroup()
 ```
 
-```{r, fig.width=15, fig.height=8}
+```{r, fig.width=16, fig.height=12}
 # 6. Plotting (using ggplot2)
 p <- ggplot(df_summary, aes(x = Year, y = speed, color = Gender)) +
   geom_line(aes(linetype = Gender), linewidth = 1) +
@@ -98,11 +98,11 @@ p <- ggplot(df_summary, aes(x = Year, y = speed, color = Gender)) +
   ) +
   theme_minimal() +
   theme(
-    plot.title = element_text(hjust = 0, size = 20, margin = margin(t = 20, b = 10)), # Increased bottom margin for title
-    plot.subtitle = element_text(hjust = 0, size = 15, margin = margin(b = 20)),
-    axis.title = element_text(size = 12),
-    legend.title = element_text(size = 14),
-    legend.text = element_text(size = 12),
+    plot.title = element_text(hjust = 0, size = 25, margin = margin(t = 20, b = 10)),
+    plot.subtitle = element_text(hjust = 0, size = 20, margin = margin(b = 20)),
+    axis.title = element_text(size = 12,),
+    legend.title = element_text(size = 17),
+    legend.text = element_text(size = 15),
     panel.grid.major = element_line(linetype = "dashed", color = "gray"),
     panel.grid.minor = element_blank(),
     plot.margin = unit(c(2.5, 1, 2.5, 1), "cm") # Increased top and bottom margins for more space
@@ -112,9 +112,8 @@ p <- ggplot(df_summary, aes(x = Year, y = speed, color = Gender)) +
 min_y_data <- min(df_summary$speed, na.rm = TRUE)
 max_y_data <- max(df_summary$speed, na.rm = TRUE)
 
-# Calculate bottom annotation y-position based on plot height
-# Using 2% of the data range from the bottom for consistency with previous intent
-y_pos_bottom_annotations <- min_y_data + (max_y_data - min_y_data) * 0.02
+# Calculate bottom annotation y-position based on plot height, adjusted to prevent cutoff
+y_pos_bottom_annotations <- min_y_data + (max_y_data - min_y_data) * 0.05 # Increased from 0.02 to 0.05
 
 # Add annotations (rectangles for shaded areas, vlines for dotted lines)
 # Tech-suit Era & Ban (2008-2010)
@@ -122,7 +121,7 @@ p <- p + annotate("rect", xmin = 2008, xmax = 2010.5, ymin = -Inf, ymax = Inf,
                   fill = "gold", alpha = 0.15) +
   annotate("text", x = (2008 + 2010.5) / 2, y = y_pos_bottom_annotations,
            label = "Tech-suit Era & Ban (2008-2010)", angle = 90,
-           vjust = 0, hjust = 0.5, color = "darkgoldenrod", size = 3)
+           vjust = 2.65, hjust = 0.285, color = "darkgoldenrod", size = 3)
 
 # WWII (1939-1946)
 p <- p + annotate("rect", xmin = 1939, xmax = 1946, ymin = -Inf, ymax = Inf,
@@ -142,7 +141,7 @@ p <- p + annotate("rect", xmin = 1914, xmax = 1919, ymin = -Inf, ymax = Inf,
 p <- p + geom_vline(xintercept = 1972, linetype = "dotted", color = "darkblue", linewidth = 0.8) +
   annotate("text", x = 1972.5, y = max_y_data * 0.78,
            label = "Widespread Goggle Use (from ~1970s)", angle = 90,
-           vjust = 0, hjust = 0, color = "darkblue", size = 3)
+           vjust = 1, hjust = 1.67, color = "darkblue", size = 3)
 
 # Women’s debut (1912)
 p <- p + geom_vline(xintercept = 1912, linetype = "dotdash", color = "pink", linewidth = 0.8) +
@@ -154,19 +153,15 @@ p <- p + geom_vline(xintercept = 1912, linetype = "dotdash", color = "pink", lin
 p <- p + geom_vline(xintercept = 1908, linetype = "dotted", color = "purple", linewidth = 0.8) +
   annotate("text", x = 1908.5, y = max_y_data * 0.82,
            label = "Standardized Pools (from 1908)", angle = 90,
-           vjust = 0, hjust = 0, color = "#663399", size = 3)
+           vjust = 1, hjust = 0, color = "#663399", size = 3)
 
 # Butterfly Introduction (1956)
 p <- p + geom_vline(xintercept = 1956, linetype = "dotted", color = "darkgreen", linewidth = 0.8) +
   annotate("text", x = 1956.5, y = max_y_data * 0.70,
            label = "Butterfly Introduced (1956)", angle = 90,
-           vjust = 0, hjust = 0, color = "darkgreen", size = 3)
+           vjust = 1, hjust = 1.35, color = "darkgreen", size = 3)
 
-# Backstroke Introduction (1900)
-p <- p + geom_vline(xintercept = 1900, linetype = "dotted", color = "gray", linewidth = 0.8) +
-  annotate("text", x = 1900.5, y = max_y_data * 0.74,
-           label = "Backstroke Introduced (1900)", angle = 90,
-           vjust = 0, hjust = 0, color = "dimgray", size = 3)
+# Backstroke Introduction (1900) - This section has been removed as per your request.
 
 
 # 7. X-axis ticks modification (label every 10 years, starting from a clean decade)
