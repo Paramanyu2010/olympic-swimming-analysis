@@ -1,5 +1,5 @@
 ---
-title: "Olympic Swimming Speed Trends Chart (1912-2020)"
+title: "Olympic Swimming Speed Trends Graph (1912-2020)"
 author: "Paramanyu Gupta"
 format:
   html:
