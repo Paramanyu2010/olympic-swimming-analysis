@@ -11,6 +11,13 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "My name is Paramanyu Gupta, and I’m a data science student passionate about sports analytics and visualization. You can find my work on GitHub and contact me at manish.gupta321@gmail.com\nThis project analyzes Olympic swimming performance data from 1912-2020, focusing on the distribution of all athlete times rather than just winning performances. The code and data are available in the GitHub repository.\nThis project was created as part of Kane’s Data Science Bootcamp."
+    "text": "My name is Paramanyu Gupta and I’m a sophomore at Independence High School! You can find my work on GitHub and contact me at manish.gupta321@gmail.com.\nThis project analyzes Olympic swimming performance data from 1912-2020, focusing on various aspects of the data, ranging from swimming speed to global medal distribution. The code and data are available in the GitHub repository.\nThis project was created as part of Kane’s Data Science Bootcamp."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Olympic Swimming Speed Trends Chart (1912-2020)",
+    "section": "",
+    "text": "Have you ever wondered just how much faster Olympic swimmers have become over the decades, and what factors might be behind that incredible progress? To explore this, I’ve analyzed comprehensive Olympic swimming data spanning from 1912 to 2020, allowing me to examine average speed trends and visualize the global distribution of Olympic medals. Through this project, we’ve clearly seen how Olympic swimmers have consistently and substantially increased their average speeds over the last century, a powerful testament to continuous advancements in both technique and technology."
   }
 ]
