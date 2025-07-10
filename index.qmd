@@ -1,9 +1,8 @@
 ---
-title: "Olympic Swimming Speed Trends Graph (1912-2020)"
-author: "Paramanyu Gupta"
 format:
   html:
     css: styles.css
+    toc: false
     include-in-header:
       - text: |
           <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,9 +21,6 @@ library(ggplot2)
 library(stringr)
 library(tidyr)
 ```
-
-Have you ever wondered just how much faster Olympic swimmers have become over the decades, and what factors might be behind that incredible progress? To explore this, I've analyzed comprehensive Olympic swimming data spanning from 1912 to 2020, allowing me to examine average speed trends and visualize the global distribution of Olympic medals. Through this project, we've clearly seen how Olympic swimmers have consistently and substantially increased their average speeds over the last century, a powerful testament to continuous advancements in both technique and technology.
-<br>
 
 ```{r}
 # 1. Data Loading
@@ -111,68 +107,79 @@ p <- ggplot(df_summary, aes(x = Year, y = speed, color = Gender)) +
   theme(
     plot.title = element_text(hjust = 0, size = 25, margin = margin(t = 20, b = 10)),
     plot.subtitle = element_text(hjust = 0, size = 20, margin = margin(b = 20)),
-    axis.title = element_text(size = 12,),
-    legend.title = element_text(size = 17),
-    legend.text = element_text(size = 15),
+    axis.title = element_text(size = 15), # Increased size for axis titles
+    axis.text = element_text(size = 12),  # Increased size for axis tick labels
+    legend.title = element_text(size = 18), # Increased size for legend title
+    legend.text = element_text(size = 16),  # Increased size for legend text
     panel.grid.major = element_line(linetype = "dashed", color = "gray"),
     panel.grid.minor = element_blank(),
-    plot.margin = unit(c(2.5, 1, 2.5, 1), "cm") # Increased top and bottom margins for more space
+    plot.margin = unit(c(2.5, 1, 2.5, 1), "cm"),
+    plot.background = element_rect(fill = "transparent", colour = NA),
+    panel.background = element_rect(fill = "transparent", colour = NA) # Transparent panel background
   )
 
 # Get y-axis limits from the data for relative positioning of annotations
 min_y_data <- min(df_summary$speed, na.rm = TRUE)
 max_y_data <- max(df_summary$speed, na.rm = TRUE)
 
-# Calculate bottom annotation y-position based on plot height, adjusted to prevent cutoff
-y_pos_bottom_annotations <- min_y_data + (max_y_data - min_y_data) * 0.05 # Increased from 0.02 to 0.05
+# Calculate bottom annotation y-position based on plot height, adjusted for larger text
+y_pos_bottom_annotations <- min_y_data + (max_y_data - min_y_data) * 0.08 # Increased slightly for more room
 
 # Add annotations (rectangles for shaded areas, vlines for dotted lines)
+# All 'size' values for annotations increased to 5 for better readability.
+# Position adjustments (y, vjust, hjust) are made to prevent overlap.
+
 # Tech-suit Era & Ban (2008-2010)
 p <- p + annotate("rect", xmin = 2008, xmax = 2010.5, ymin = -Inf, ymax = Inf,
                   fill = "gold", alpha = 0.15) +
   annotate("text", x = (2008 + 2010.5) / 2, y = y_pos_bottom_annotations,
            label = "Tech-suit Era & Ban (2008-2010)", angle = 90,
-           vjust = 2.65, hjust = 0.285, color = "darkgoldenrod", size = 3)
+           vjust = 0.5, hjust = 0.3, # Centered relative to x,y
+           color = "darkgoldenrod", size = 5) # Increased size
 
 # WWII (1939-1946)
 p <- p + annotate("rect", xmin = 1939, xmax = 1946, ymin = -Inf, ymax = Inf,
                   fill = "red", alpha = 0.05) +
   annotate("text", x = 1942, y = y_pos_bottom_annotations,
            label = "WWII (1939-1946)", angle = 90,
-           vjust = 0, hjust = 0.5, color = "darkred", size = 3)
+           vjust = 0.5, hjust = -2.9, # Centered relative to x,y
+           color = "darkred", size = 5) # Increased size
 
 # WWI (1914-1919)
 p <- p + annotate("rect", xmin = 1914, xmax = 1919, ymin = -Inf, ymax = Inf,
                   fill = "blue", alpha = 0.05) +
   annotate("text", x = 1916, y = y_pos_bottom_annotations,
            label = "WWI (1914-1919)", angle = 90,
-           vjust = 0, hjust = 0.5, color = "darkblue", size = 3)
+           vjust = 0.5, hjust = -3.05, # Centered relative to x,y
+           color = "darkblue", size = 5) # Increased size
 
 # Widespread Goggle Use (from ~1970s)
 p <- p + geom_vline(xintercept = 1972, linetype = "dotted", color = "darkblue", linewidth = 0.8) +
-  annotate("text", x = 1972.5, y = max_y_data * 0.78,
+  annotate("text", x = 1972.5, y = max_y_data * 0.75, # Slightly lower y for more space
            label = "Widespread Goggle Use (from ~1970s)", angle = 90,
-           vjust = 1, hjust = 1.67, color = "darkblue", size = 3)
+           vjust = 1, hjust = 0.85, # Centered relative to x,y
+           color = "darkblue", size = 5) # Increased size
 
 # Women’s debut (1912)
 p <- p + geom_vline(xintercept = 1912, linetype = "dotdash", color = "pink", linewidth = 0.8) +
-  annotate("text", x = 1912.5, y = max_y_data * 0.9,
+  annotate("text", x = 1912.5, y = max_y_data * 0.88, # Slightly lower y for more space
            label = "Women's Debut (1912)", angle = 90,
-           vjust = 1, hjust = 0, color = "deeppink", size = 3)
+           vjust = 0.6, hjust = 0.5, # Centered relative to x,y
+           color = "deeppink", size = 5) # Increased size
 
 # Standardized Pools (from 1908)
 p <- p + geom_vline(xintercept = 1908, linetype = "dotted", color = "purple", linewidth = 0.8) +
-  annotate("text", x = 1908.5, y = max_y_data * 0.82,
+  annotate("text", x = 1908.5, y = max_y_data * 0.80, # Slightly lower y for more space
            label = "Standardized Pools (from 1908)", angle = 90,
-           vjust = 1, hjust = 0, color = "#663399", size = 3)
+           vjust = 0.8, hjust = 0.5, # Centered relative to x,y
+           color = "#663399", size = 5) # Increased size
 
 # Butterfly Introduction (1956)
 p <- p + geom_vline(xintercept = 1956, linetype = "dotted", color = "darkgreen", linewidth = 0.8) +
-  annotate("text", x = 1956.5, y = max_y_data * 0.70,
+  annotate("text", x = 1956.5, y = max_y_data * 0.68, # Slightly lower y for more space
            label = "Butterfly Introduced (1956)", angle = 90,
-           vjust = 1, hjust = 1.35, color = "darkgreen", size = 3)
-
-# Backstroke Introduction (1900) - This section has been removed as per your request.
+           vjust = 0.5, hjust = 0.7, # Centered relative to x,y
+           color = "darkgreen", size = 5) # Increased size
 
 
 # 7. X-axis ticks modification (label every 10 years, starting from a clean decade)
@@ -185,3 +192,19 @@ print(p)
 # Save the plot to a file (optional, Quarto can also save plots automatically)
 ggsave("olympic_swimming_trends_R.png", plot = p, width = 15, height = 8, units = "in")
 ```
+
+<br>
+<div class="project-summary">
+Have you ever wondered just how much faster Olympic swimmers have become over the decades, and what factors might be behind that incredible progress? To explore this, I've analyzed comprehensive Olympic swimming data spanning from 1912 to 2020, allowing me to examine average speed trends and visualize the global distribution of Olympic medals. Through this project, we've clearly seen how Olympic swimmers have consistently and substantially increased their average speeds over the last century, a powerful testament to continuous advancements in both technique and technology.
+</div>
+
+<div class="historical-events-box">
+## Key Historical Moments in Olympic Swimming
+
+* **Women's Swimming Debut (1912):** The 1912 Stockholm Olympics marked a historic moment as women were officially allowed to compete in swimming events for the first time.
+* **WWI (1914-1918) - Olympics Cancelled:** The outbreak of World War I resulted in the suspension of the Olympic Games, pausing international swimming competition.
+* **WWII (1939-1945) - Olympics Cancelled:** The global conflict of World War II led to the cancellation of Olympic Games, interrupting competitive swimming's progress.
+* **Butterfly Stroke Introduced (1956):** The butterfly stroke was formally recognized as a separate competitive event at the 1956 Melbourne Olympics, showcasing a new, powerful technique.
+* **Goggle Use Becomes Widespread (1972):** The widespread adoption of swimming goggles greatly improved visibility and comfort, indirectly aiding performance.
+* **Tech-suit Era & Ban (2008-2010):** This period saw a significant, albeit temporary, surge in speeds due to advanced full-body polyurethane swimsuits.
+</div>

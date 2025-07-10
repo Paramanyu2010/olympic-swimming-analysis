@@ -1,9 +1,10 @@
+/* Custom color variables */
 :root {
     /* Primary Blues (Water) */
     --olympic-blue-dark: #0A2342; /* Deep Navy, for backgrounds/text */
     --olympic-blue-medium: #176B87; /* Slightly lighter, for accents */
     --olympic-blue-light: #64CCC5; /* Light blue, for highlights/details */
-    --olympic-white: #EEEEEE; /* Off-white for clean backgrounds/text */
+    --olympic-white: #EEEEEE; /* Off-white for clean backgrounds/text - This is your grey website background! */
 
     /* Olympic Gold/Accent */
     --olympic-gold: #FFD700; /* Gold for highlights, lines, special text */
@@ -11,14 +12,14 @@
     --olympic-bronze: #CD7F32; /* Bronze for subtle accents */
 
     /* Neutral for text/details */
-    --text-dark: #333333;
+    --text-dark: #333333; /* Original dark text, now less used for general text */
     --text-light: #FFFFFF;
 }
 
 body {
-    background-color: var(--olympic-white);
-    color: var(--text-dark);
-    font-family: 'Roboto', sans-serif; /* Example professional font */
+    background-color: var(--olympic-white); /* Your desired grey background */
+    color: var(--olympic-blue-dark); /* Changed general paragraph text to navy blue */
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -27,46 +28,44 @@ body {
 .quarto-title-banner {
     background-color: var(--olympic-blue-dark); /* Dark blue background for the header */
     color: var(--text-light); /* Default text color for elements inside */
-    padding: 80px 20px; /* Generous vertical padding for a hero feel */
+    padding: 80px 20px;
     text-align: center;
-    margin-bottom: 40px; /* Space between the header and the first content section */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    margin-bottom: 40px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Style the main title (H1) within the banner */
 .quarto-title-banner h1.title {
-    color: var(--olympic-gold); /* Gold color for the main title */
-    font-size: 3.8em; /* Make the title larger and more impactful */
-    margin-top: 0; /* Remove default top margin */
-    margin-bottom: 15px; /* Space below the title */
-    line-height: 1.1; /* Adjust line height for better appearance */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Subtle text shadow for pop */
+    color: var(--olympic-gold);
+    font-size: 3.8em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    line-height: 1.1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Style the subtitle (P) within the banner */
 .quarto-title-banner p.subtitle {
-    color: var(--olympic-white); /* White/light color for subtitle */
-    font-size: 1.6em; /* Slightly larger subtitle */
-    max-width: 900px; /* Constrain subtitle width for readability */
-    margin: 0 auto; /* Center the subtitle */
+    color: var(--olympic-white);
+    font-size: 1.6em;
+    max-width: 900px;
+    margin: 0 auto;
     line-height: 1.5;
 }
 
 
-/* Overall container for the main content to give a clean, centered look */
-.quarto-layout-panel { /* This targets Quarto's main content area */
+/* Overall container for the main content (this will be your main white box) */
+.quarto-layout-panel {
     max-width: 1200px;
-    margin: 0 auto; /* Keeps it centered */
-    padding: 20px; /* Inner padding */
-    background-color: var(--text-light);
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white; /* Changed to pure white */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    box-sizing: border-box; /* Include padding in element's total width and height */
+    box-sizing: border-box;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Oswald', sans-serif; /* Stronger, sporty heading font */
-    color: var(--olympic-blue-dark);
+    font-family: 'Oswald', sans-serif;
+    color: var(--olympic-blue-dark); /* Changed all headers to navy blue */
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -74,16 +73,17 @@ h1, h2, h3, h4, h5, h6 {
 p {
     line-height: 1.6;
     margin-bottom: 1em;
+    color: var(--olympic-blue-dark); /* Ensure explicit navy blue for paragraphs */
 }
 
-/* Custom styling for the project summary paragraph */
+/* Custom styling for the project summary box (now pure white) */
 .project-summary {
-    background-color: var(--olympic-blue-light);
+    background-color: white; /* Pure white background */
     color: var(--olympic-blue-dark);
     padding: 25px 30px;
     margin-bottom: 40px;
     border-radius: 8px;
-    border-left: 8px solid var(--olympic-gold);
+    border-left: 8px solid var(--olympic-blue-medium);
     font-size: 1.1em;
     line-height: 1.7;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
@@ -93,13 +93,13 @@ p {
     margin-bottom: 0;
 }
 
-/* Section styling for clear separation and visual appeal */
+/* Section styling (your existing one) */
 section {
     padding: 40px 20px;
     margin-bottom: 30px;
-    background-color: var(--olympic-white);
-    border-radius: 5px;
-    border-left: 5px solid var(--olympic-blue-medium); /* Subtle accent line */
+    background-color: white; /* Changed to pure white for sections */
+    border-radius: 8px; /* Consistent rounded corners */
+    border-left: 5px solid var(--olympic-blue-medium);
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
@@ -133,19 +133,53 @@ button:hover {
     transform: translateY(-2px);
 }
 
-/* Specific styling for your Leaflet map container (assuming you give it id="medal-map") */
+/* Specific styling for your Leaflet map container */
 #medal-map {
     border: 3px solid var(--olympic-blue-medium);
     border-radius: 8px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    /* Make sure to set a height for your map div in your QMD file, e.g., style="height: 500px;" */
 }
 
-/* Example for a custom section header line */
+/* Custom section header line */
 .section-header {
     border-bottom: 2px solid var(--olympic-gold);
     padding-bottom: 10px;
     margin-bottom: 20px;
     font-family: 'Oswald', sans-serif;
     color: var(--olympic-blue-dark);
+}
+
+/* Styling for Key Historical Events Box (now pure white) */
+.historical-events-box {
+    background-color: white; /* Pure white background */
+    padding: 25px 30px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    border-left: 8px solid var(--olympic-blue-medium);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.historical-events-box ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.historical-events-box li {
+    margin-bottom: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 1.2em;
+  }
+  .nav-link {
+    margin-left: 0;
+    text-align: center;
+  }
+  .project-summary, .historical-events-box {
+    padding: 15px 20px;
+    margin-bottom: 20px;
+  }
 }
