@@ -1,0 +1,10 @@
+name: test-shiny-app-v3
+title: Test Shiny App V3
+username: paramanyu2010
+account: paramanyu2010
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 15060508
+bundleId: 10596838
+url: https://paramanyu2010.shinyapps.io/test-shiny-app-v3/
+version: 1

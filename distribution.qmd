@@ -1,0 +1,145 @@
+---
+title: "Olympic Medal Distribution" # Title for your page
+format:
+  html:
+    css: styles.css
+    page-layout: full
+    self-contained: true # Keeping self-contained for easier static file sharing
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+```{r setup, include=FALSE}
+# Load necessary libraries
+library(readr)
+library(dplyr)
+library(leaflet)
+library(rnaturalearth) # For world map data
+library(sf) # For spatial data manipulation
+library(countrycode) # For converting NOC codes to ISO country codes
+library(htmltools) # For creating richer HTML content in popups
+library(tidyr) # For the replace_na() function
+# Removed: library(shiny) as we are no longer using interactive Shiny elements
+```
+
+
+```{r}
+# Load the Olympic swimming data
+df_raw <- read_csv("data/olympic_swimming.csv")
+
+# Aggregate medals by Team
+# This sums up the counts for each medal type per country/team
+medal_counts <- df_raw %>%
+  # Filter for medal-winning ranks only (1, 2, or 3)
+  filter(Rank %in% c(1, 2, 3)) %>%
+  group_by(Team) %>% # Group by Team column
+  summarise(
+    Gold_Medals = sum(Rank == 1),    # Count rows where Rank is 1 (Gold)
+    Silver_Medals = sum(Rank == 2),  # Count rows where Rank is 2 (Silver)
+    Bronze_Medals = sum(Rank == 3),  # Count rows where Rank is 3 (Bronze)
+    All_Medals = n() # Total count of all medals for this Team (within the filtered group)
+  ) %>%
+  ungroup()
+
+# Get the world map data from rnaturalearth
+world <- ne_countries(scale = "small", returnclass = "sf")
+
+# Filter out Antarctica (ISO A3 code 'ATA') from the world map data
+world <- world %>%
+  filter(iso_a3 != "ATA") # ADDED: Exclude Antarctica
+
+# Convert Team codes from your data to ISO A3 codes (standard 3-letter country codes)
+# Using 'ioc' as origin, which is another common Olympic abbreviation standard.
+medal_counts <- medal_counts %>%
+  mutate(iso_a3 = countrycode(Team, origin = 'ioc', destination = 'iso3c'))
+
+# Join the aggregated medal data with the world map's spatial data
+# We use a left_join to keep all countries in the map, even those with no swimming medals
+world_medals <- left_join(world, medal_counts, by = c("iso_a3" = "iso_a3"))
+
+# Replace any NA medal counts with 0. This ensures countries with no medals are
+# correctly represented (e.g., in coloring) instead of being treated as missing data.
+world_medals <- world_medals %>%
+  mutate(
+    Gold_Medals = replace_na(Gold_Medals, 0),
+    Silver_Medals = replace_na(Silver_Medals, 0),
+    Bronze_Medals = replace_na(Bronze_Medals, 0),
+    All_Medals = replace_na(All_Medals, 0)
+  )
+
+# Define the choices for the medal type (no longer interactive, but kept for clarity in labels)
+medal_column_choices <- c(
+  "All Medals" = "All_Medals",
+  "Gold Medals" = "Gold_Medals",
+  "Silver Medals" = "Silver_Medals",
+  "Bronze Medals" = "Bronze_Medals"
+)
+```
+
+<div class="map-box">
+
+```{r}
+# The map will now display "All_Medals" statically.
+
+data_to_plot <- world_medals %>%
+  mutate(current_medal_count = All_Medals) # Fixed to All_Medals for this static version
+
+# Create a color palette that scales with the current medal count.
+pal <- colorNumeric(
+  palette = "Reds", # Reverted to "Blues" palette as per your working version
+  domain = data_to_plot$current_medal_count,
+  na.color = "#DDDDDD" # Light grey for countries with no data/matches
+)
+
+# Build the Leaflet map
+leaflet(data = data_to_plot) %>%
+  addTiles(options = tileOptions(noWrap = TRUE)) %>% # ADDED: noWrap to prevent repeating map
+  addProviderTiles(providers$CartoDB.Positron, options = providerTileOptions(noWrap = TRUE)) %>% # ADDED: noWrap
+  setMaxBounds(
+    lng1 = -180, lat1 = -90, # West, South
+    lng2 = 180, lat2 = 90    # East, North
+  ) %>% # ADDED: Limit panning to prevent world looping
+  addPolygons(
+    fillColor = ~pal(current_medal_count), # Color countries based on the selected medal count
+    weight = 2,      # Reverted to original border thickness
+    opacity = 1,     # Border opacity
+    color = "000000", # Reverted to original border color
+    dashArray = "3", # Reverted to original dashed border
+    fillOpacity = 0.7, # Reverted to original fill opacity
+    highlightOptions = highlightOptions( # Options when hovering over a country
+      weight = 2,
+      color = "#666",
+      dashArray = "",
+      fillOpacity = 0.9,
+      bringToFront = TRUE
+    ),
+    label = ~lapply(paste0( # Create interactive popups with medal details
+      "<strong>", name, "</strong><br/>", # Country Name (bold)
+      "Gold: ", Gold_Medals, "<br/>",
+      "Silver: ", Silver_Medals, "<br/>",
+      "Bronze: ", Bronze_Medals, "<br/>",
+      "Total: ", All_Medals
+    ), htmltools::HTML), # Use HTML for formatting within the popup
+    labelOptions = labelOptions( # Styling for the popup labels
+      style = list("font-weight" = "normal", padding = "3px 8px"),
+      textsize = "15px",
+      direction = "auto" # Automatically position the label
+    )
+  ) %>%
+  addLegend( # Add a color legend to the map
+    pal = pal,
+    values = ~current_medal_count,
+    opacity = 0.7,
+    title = "All Medals", # Static legend title
+    position = "bottomright" # Position the legend on the map
+  )
+```
+
+</div>
+
+
+<div class="project-summary">
+The Olympic Medal Distribution map offers a clear visual analysis of national performance in swimming, inviting a moment to reflect on the journeys behind each triumph. Countries with higher medal totals from 1912 to 2020 are depicted in deeper shades of red. Here, the United States stands out with a particularly intense crimson, visually representing its significant and long-standing dominance in the sport, accumulating a remarkable 549 medals over the decades. This geographical overview underscores the concentrated nature of elite swimming talent and success, often linked to factors such as dedicated athletic programs, advanced training facilities, and widespread participation within a country.
+</div> 

@@ -134,7 +134,11 @@ button:hover {
 }
 
 /* Specific styling for your Leaflet map container */
-#medal-map {
+/* NOTE: This #medal-map ID is not currently used in your distribution.qmd.
+   The new .map-box class will wrap the map.
+   If you want to apply styles directly to the Leaflet map element, you'd need to add
+   id="medal-map" to the leafletOutput function in R, or target .leaflet-container */
+#medal-map { /* This rule is currently not applied as no element has this ID */
     border: 3px solid var(--olympic-blue-medium);
     border-radius: 8px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -169,17 +173,37 @@ button:hover {
     margin-bottom: 10px;
 }
 
+/* --- NEW STYLES FOR MAP BOX --- */
+.map-box {
+    background-color: white; /* White background for the box */
+    padding: 20px; /* Padding inside the box */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Soft shadow */
+    margin-bottom: 40px; /* Space below the box */
+    overflow: hidden; /* Ensures map content stays within rounded corners */
+}
+
+/* Ensure the Leaflet map itself fits within the container and has its own rounded corners */
+/* Leaflet maps generate a div with class 'leaflet-container' */
+.leaflet-container { /* Targeting the actual Leaflet map container */
+    border-radius: 8px; /* Slightly smaller border-radius for the map itself */
+    overflow: hidden; /* Ensures map tiles also respect rounded corners */
+    /* Remove any explicit border here if #medal-map was used for it */
+    border: none; /* Ensure no conflicting borders if #medal-map was active */
+}
+
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .navbar-brand {
-    font-size: 1.2em;
-  }
-  .nav-link {
-    margin-left: 0;
-    text-align: center;
-  }
-  .project-summary, .historical-events-box {
-    padding: 15px 20px;
-    margin-bottom: 20px;
-  }
+    .navbar-brand {
+        font-size: 1.2em;
+    }
+    .nav-link {
+        margin-left: 0;
+        text-align: center;
+    }
+    .project-summary, .historical-events-box {
+        padding: 15px 20px;
+        margin-bottom: 20px;
+    }
 }

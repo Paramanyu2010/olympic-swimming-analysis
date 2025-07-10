@@ -1,6 +1,5 @@
 ---
 title: "About"
-author: "Paramanyu Gupta"
 ---
 
 My name is Paramanyu Gupta and I'm a sophomore at Independence High School! You can find my work on [GitHub](https://github.com/Paramanyu2010) and contact me at manish.gupta321@gmail.com.

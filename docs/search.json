@@ -4,7 +4,7 @@
     "href": "sources.html",
     "title": "Data Sources",
     "section": "",
-    "text": "The data for this project comes from the SCORE Sports Data Repository, specifically their Olympic Swimming History dataset available at https://data.scorenetwork.org/swimming/olympic_swimming_history.html. This dataset contains comprehensive results from Olympic swimming competitions from 1912 to 2020, including 4,359 individual race results.\nThe original data source is olympics.com, and the dataset was compiled and made available by datasciencedonut on Kaggle. The data includes all athletes who competed in Olympic swimming events, not just medal winners, which makes it ideal for understanding the full spectrum of Olympic-level performance.\nData cleaning involved converting time formats from minutes:seconds.decimal to total seconds for analysis, removing DNS (Did Not Start) and DQ (Disqualified) entries, and filtering out obvious data entry errors or outliers. No observations were removed based on performance criteria - the goal was to include all legitimate competitive times to show the complete picture of Olympic swimming performance.\nThe dataset includes the following variables:\n\nLocation: Hosting city of the Olympics\nYear: Year of the Olympics (1912-2020)\nDistance: Distance in meters (relays show number of swimmers × distance per swimmer)\nStroke: Type of swimming stroke (Freestyle, Backstroke, Breaststroke, Butterfly, Individual Medley)\nRelay: Binary indicator (0 for individual events, 1 for relay events)\nGender: Men or Women\nTeam: Three-letter country code\nAthlete: Name of the athlete\nResults: Time in minutes:seconds.decimal format\nRank: Medal placement (1=Gold, 2=Silver, 3=Bronze, 4=No Medal, 0=DNS/DQ)"
+    "text": "The data for this project comes from the SCORE Sports Data Repository, specifically their Olympic Swimming History dataset. This dataset contains comprehensive results from Olympic swimming competitions from 1912 to 2020, including 4,359 individual race results.\nThe original data source is olympics.com, and the dataset was compiled and made available by datasciencedonut on Kaggle. The data includes all athletes who competed in Olympic swimming events, not just medal winners, which makes it ideal for understanding the full spectrum of Olympic-level performance.\nData cleaning involved converting time formats from minutes:seconds.decimal to total seconds for analysis, removing DNS (Did Not Start) and DQ (Disqualified) entries, and filtering out obvious data entry errors or outliers. No observations were removed based on performance criteria - the goal was to include all legitimate competitive times to show the complete picture of Olympic swimming performance.\nThe dataset includes the following variables:\n\nLocation: Hosting city of the Olympics\nYear: Year of the Olympics (1912-2020)\nDistance: Distance in meters (relays show number of swimmers × distance per swimmer)\nStroke: Type of swimming stroke (Freestyle, Backstroke, Breaststroke, Butterfly, Individual Medley)\nRelay: Binary indicator (0 for individual events, 1 for relay events)\nGender: Men or Women\nTeam: Three-letter country code\nAthlete: Name of the athlete\nResults: Time in minutes:seconds.decimal format\nRank: Medal placement (1=Gold, 2=Silver, 3=Bronze, 4=No Medal, 0=DNS/DQ)"
   },
   {
     "objectID": "about.html",
@@ -26,5 +26,19 @@
     "title": "Olympic Swimming Analysis",
     "section": "Key Historical Moments in Olympic Swimming",
     "text": "Key Historical Moments in Olympic Swimming\n\nWomen’s Swimming Debut (1912): The 1912 Stockholm Olympics marked a historic moment as women were officially allowed to compete in swimming events for the first time.\nWWI (1914-1918) - Olympics Cancelled: The outbreak of World War I resulted in the suspension of the Olympic Games, pausing international swimming competition.\nWWII (1939-1945) - Olympics Cancelled: The global conflict of World War II led to the cancellation of Olympic Games, interrupting competitive swimming’s progress.\nButterfly Stroke Introduced (1956): The butterfly stroke was formally recognized as a separate competitive event at the 1956 Melbourne Olympics, showcasing a new, powerful technique.\nGoggle Use Becomes Widespread (1972): The widespread adoption of swimming goggles greatly improved visibility and comfort, indirectly aiding performance.\nTech-suit Era & Ban (2008-2010): This period saw a significant, albeit temporary, surge in speeds due to advanced full-body polyurethane swimsuits."
+  },
+  {
+    "objectID": "distribution.html",
+    "href": "distribution.html",
+    "title": "Olympic Medal Distribution",
+    "section": "",
+    "text": "The Olympic Medal Distribution map offers a clear visual analysis of national performance in swimming, inviting a moment to reflect on the journeys behind each triumph. Countries with higher medal totals from 1912 to 2020 are depicted in deeper shades of red. Here, the United States stands out with a particularly intense crimson, visually representing its significant and long-standing dominance in the sport, accumulating a remarkable 549 medals over the decades. This geographical overview underscores the concentrated nature of elite swimming talent and success, often linked to factors such as dedicated athletic programs, advanced training facilities, and widespread participation within a country."
+  },
+  {
+    "objectID": "distribution.html#global-olympic-swimming-medal-distribution",
+    "href": "distribution.html#global-olympic-swimming-medal-distribution",
+    "title": "Olympic Medal Distribution",
+    "section": "",
+    "text": "This map visualizes the distribution of All Olympic swimming medals across countries."
   }
 ]

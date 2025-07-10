@@ -9,10 +9,13 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: about.qmd
-        text: About
+      - href: distribution.qmd 
+        text: Medal Map   
       - href: sources.qmd
         text: Sources
+      - href: about.qmd
+        text: About
+
 
 format:
   html:

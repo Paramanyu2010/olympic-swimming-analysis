@@ -91,6 +91,8 @@ df_summary <- df_cleaned %>%
   ungroup()
 ```
 
+<div class="map-box">
+
 ```{r, fig.width=16, fig.height=12}
 # 6. Plotting (using ggplot2)
 p <- ggplot(df_summary, aes(x = Year, y = speed, color = Gender)) +
@@ -192,6 +194,8 @@ print(p)
 # Save the plot to a file (optional, Quarto can also save plots automatically)
 ggsave("olympic_swimming_trends_R.png", plot = p, width = 15, height = 8, units = "in")
 ```
+
+</div>
 
 <br>
 <div class="project-summary">

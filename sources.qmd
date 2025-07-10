@@ -1,9 +1,8 @@
 ---
 title: "Data Sources"
-author: "Paramanyu Gupta"
 ---
 
-The data for this project comes from the SCORE Sports Data Repository, specifically their Olympic Swimming History dataset available at https://data.scorenetwork.org/swimming/olympic_swimming_history.html. This dataset contains comprehensive results from Olympic swimming competitions from 1912 to 2020, including 4,359 individual race results.
+The data for this project comes from the [SCORE Sports Data Repository](https://data.scorenetwork.org/swimming/olympic_swimming_history.html), specifically their Olympic Swimming History dataset. This dataset contains comprehensive results from Olympic swimming competitions from 1912 to 2020, including 4,359 individual race results.
 
 The original data source is olympics.com, and the dataset was compiled and made available by datasciencedonut on Kaggle. The data includes all athletes who competed in Olympic swimming events, not just medal winners, which makes it ideal for understanding the full spectrum of Olympic-level performance.
 
